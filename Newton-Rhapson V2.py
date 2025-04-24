@@ -140,8 +140,8 @@ def newton_raphson(matriz, iteracciones=100):
             print(f"Convergencia alcanzada en la iteración {k}, norma={normFx}")
             break
         
-        # Jacobiano evaluado con w=0 (según tu código original)
-        J = jacobiano(matriz, 2)
+        # Jacobiano evaluado con w
+        J = jacobiano(matriz, 0)
         
         # En tu código original, calculas: b = J*x - Fx
         x_flat = matriz.reshape(-1)
@@ -175,8 +175,7 @@ ny, nx = 7, 52
 
 # Creamos la matriz inicial de velocidades
 # Queremos que la columna j=0 sea la "entrada" con V=1
-Vx_inicial = np.zeros((ny, nx))
-Vx_inicial[:, 0] = 0.1  # Entrada de agua por la izquierda con velocidad 1
+Vx_inicial = np.tile(np.linspace(1, 0, nx), (ny, 1))
 
 # Resolvemos con Newton-Raphson
 Vx_resultante = newton_raphson(Vx_inicial, iteracciones=100)
