@@ -26,7 +26,7 @@ def gauss_seidel_solver(Vx_initial, w=2, max_iter=1000, tol=1e-5):
                 # Cálculo de vecinos (actualizando con valores nuevos cuando sea posible)
                 Vx_up = Vx[i-1, j] if i > 0 else 0.0
                 Vx_down = Vx[i+1, j] if i < nrows-1 else 0.0
-                Vx_left = 3.0 if j == 0 else Vx[i, j-1]  # Usa valor ya actualizado si j>0
+                Vx_left = 1.0 if j == 0 else Vx[i, j-1]  # Usa valor ya actualizado si j>0
                 Vx_right = 0.0 if j == ncols-1 else Vx[i, j+1]
                 
                 # Ecuación principal (modificada para mejor convergencia)
@@ -58,11 +58,11 @@ def gauss_seidel_solver(Vx_initial, w=2, max_iter=1000, tol=1e-5):
 ny, nx = 7, 52  # 7 filas (vertical), 52 columnas (horizontal)
 
 # Condición inicial: perfil lineal de velocidades (1 en izquierda, 0 en derecha)
-Vx_inicial = np.zeros((ny, nx))
-Vx_inicial[:, 0] = 1.0  # Velocidad 1 en la entrada izquierda
+Vx_inicial = np.tile(np.linspace(1, 0, nx), (ny, 1))
+
 
 # Parámetros del solver
-w = 2.0       # Parámetro de vorticidad
+w = 0.5       # Parámetro de vorticidad
 tolerancia = 1e-5
 max_iteraciones = 1000
 
